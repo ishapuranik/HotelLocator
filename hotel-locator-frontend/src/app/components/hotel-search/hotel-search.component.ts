@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HotelService } from 'src/app/services/hotel.service';
-import  { toPromise } 'rxjs/add/operator/toPromise';
+import { debounce, take } from 'rxjs/operators';
+import { interval, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-hotel-search',
@@ -10,27 +11,33 @@ import  { toPromise } 'rxjs/add/operator/toPromise';
 export class HotelSearchComponent implements OnInit {
   hotelSearchField: any = "";
   hotelsList: any = [];
+  search$: Subject<string> = new Subject<string>();
   
   constructor(private hotelService: HotelService) { }
 
   ngOnInit()
   {
     this.getPendingTrades();
+
+this.search$.asObservable().pipe(debounce(() => interval(3000))).subscribe((value: string) => {
+  console.log(value);
+  this.hotelService.getHotelFilterDataObservable(this.hotelSearchField).subscribe(a => {
+        this.hotelsList = a;
+    
+});
+});
 }
 
 public getPendingTrades() {
-    this.hotelService.getHotelDataObservable().subscribe().(a => {
-    this.hotelsList = a;
-  }).catch();
+    this.hotelService.getHotelDataObservable().pipe(take(1)).subscribe(a => {
+   
+    this.hotelsList = [...a];
+  }, () => {
+    this.hotelsList = [];
+  });
 }
 
-  handleByHotelName() {
-    if (this.hotelSearchField.length > 3) {
+  handleByHotelName(event: any) {
+ this.search$.next(event);}
 
-      // //Call here Service, which will call Web api and display result
-      // fetch(`http://localhost:5000/city-and-airport-search/${this.hotelSearchField}`)
-      // .then(response => response.json())
-      // .then(data => this.hotelSearchField = data.data)
-    }
-  }
 }

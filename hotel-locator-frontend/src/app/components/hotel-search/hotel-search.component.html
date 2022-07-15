@@ -1,9 +1,9 @@
 <h1><strong>Find hotels around the world</strong></h1>
     <hr>
     <form>
-            <div *ngIf="fromLocationTemplate">
+            <div>
                 <label for=""><h3>Search By Hotel:</h3></label>
-                <input type="text" class="form-control" name="from" [(ngModel)]="hotelSearchField" (keypress)="handleByHotelName()">
+                <input type="text" class="form-control" name="from" [(ngModel)]="hotelSearchField" (ngModelChange)="handleByHotelName($event)">
                 <small>Hotel Name</small>
                 <!-- <div class="card mb-3 mt-3" *ngFor="let Location of fromLocation" (click)="handleOrigin(Location)">
                     <div class="card-header"><b>Name:</b> {{ Location.name }}</div>
@@ -20,7 +20,8 @@
                         <br>
                         Location: {{ hotel.location }}
                     </div>
-                    <div class="card-footer"><b>Rating:</b> {{ hotel.rating }}</div>
+                    <!-- <ratings [value]="hotel.rating"></ratings> -->
+                    <div class="card-footer"><b>Rating:</b> {{ hotel.rating }} </div>
                   </div>
             </div>
     </form>

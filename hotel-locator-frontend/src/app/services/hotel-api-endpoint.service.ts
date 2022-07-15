@@ -9,7 +9,10 @@ import {
 import { Observable, of, tap } from "rxjs";
 import { ConfigurationService } from "src/app/services/configuration.service";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
+
 export class HotelApiEndpoint {
     private readonly _baseUrl: string = this.configurations.baseUrl;
 
@@ -24,7 +27,7 @@ export class HotelApiEndpoint {
         protected configurations: ConfigurationService,
         injector: Injector
     ) {
-        //this.http = http;
+        
     }
 
     public getHotelDataEndpoint<T>(): Observable<T> {
@@ -38,18 +41,23 @@ export class HotelApiEndpoint {
             );
     }
 
-    public getHotelSearchByNameOrRatingDataEndpoint<T>(
+    public getHotelSearchByNameOrRatingDataEndpoint(
         hotelName : string,
-        rating : number,
-     ): Observable<T> {
+        rating? : number,
+     ): Observable<any> {
+        const params = {
+            hotelName: hotelName
+        } as any;
+        if (rating != undefined && rating != null) {
+            params['rating'] = rating;
+        }
         return this.http
-            .get<T>(
-                this._hotelSearchDataUrl +
-                    "hotelName=" +
-                    hotelName +
-                    "&&rating=" +
-                    rating,
-                this.getRequestHeaders()
+            .get(
+                this._hotelSearchDataUrl,
+                {
+                    headers: this.getRequestHeaders().headers,
+                    params
+                }
             )
             .pipe(
                 tap(

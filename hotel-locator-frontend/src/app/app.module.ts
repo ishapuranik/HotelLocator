@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HotelSearchComponent } from './components/hotel-search/hotel-search.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -11,9 +12,12 @@ import { HotelSearchComponent } from './components/hotel-search/hotel-search.com
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

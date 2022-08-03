@@ -28,15 +28,15 @@ export class HotelService {
 
     //Todo: remove endpoint ts code and move it to hotel service
     public getHotelDataObservable() {
-        return this.hotelEndpoint.getHotelDataEndpoint<IHotelData[]>();
+        return this.hotelEndpoint.getHotelDataEndpoint<any[]>();
          
     }
 
     public getHotelFilterDataObservable(hotelName: string, rating?: number) {
-        var hotelList: IHotelData[] = [];
+        var hotelList: any[] = [];
 
         return this.hotelEndpoint.getHotelSearchByNameOrRatingDataEndpoint(hotelName, rating)
-            .pipe(map((hotelData: IHotelData[]) => {
+            .pipe(map((hotelData: any[]) => {
             this.processHotelDataResponse(hotelData);
             }),
             catchError((error: Error) => {

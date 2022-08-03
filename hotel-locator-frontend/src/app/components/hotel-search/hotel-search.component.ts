@@ -24,17 +24,16 @@ export class HotelSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getPendingTrades();
+    this.getHotelsList();
 
     this.search$
       .asObservable()
       .pipe(debounce(() => interval(3000)))
       .subscribe((value: string) => {
-        console.log(value);
         this.hotelService
           .getHotelFilterDataObservable(this.hotelSearchField)
           .subscribe((a) => {
-            this.hotelsList = a;
+            this.hotelsList = a.HotelListModel;
           });
       });
   }
@@ -54,13 +53,13 @@ export class HotelSearchComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  public getPendingTrades() {
+  public getHotelsList() {
     this.hotelService
       .getHotelDataObservable()
       .pipe(take(1))
       .subscribe(
-        (a) => {
-          this.hotelsList = [...a];
+        (a: any) => {
+          this.hotelsList = [...a.hotelListModel];
         },
         () => {
           this.hotelsList = [];

@@ -17,10 +17,10 @@ export class HotelApiEndpoint {
     private readonly _baseUrl: string = this.configurations.baseUrl;
 
     private readonly _hotelListDataUrl: string =
-        this._baseUrl + "/api/hotel/hotels-list";
+        this._baseUrl + "/HotelLocator";
 
     private readonly _hotelSearchDataUrl: string =
-    this._baseUrl + "/api/hotel/hotels-search-list";
+    this._baseUrl + "/HotelLocator/get-hotel-list-by-search-param";
 
     constructor(
         private http: HttpClient,

@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { HotelSearchComponent } from './components/hotel-search/hotel-search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AnyRatingModule } from './components/rating/rating.module';
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AnyRatingModule } from './components/rating/rating.module';
     ReactiveFormsModule,
     FormsModule,
     // internal
-    AnyRatingModule
+    AnyRatingModule,
+    FlexLayoutModule
   ],
   providers: [
 

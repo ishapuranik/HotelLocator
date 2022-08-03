@@ -1,44 +1,36 @@
 <h1><strong>Find hotels around the world</strong></h1>
 <hr />
 <form>
-  <div>
-    <label for=""><h3>Search By Hotel:</h3></label>
-    <input
-      type="text"
-      class="form-control"
-      name="from"
-      [(ngModel)]="hotelSearchField"
-      (ngModelChange)="handleByHotelName($event)"
-    />
-    <!-- input test -->
     <div [formGroup]="form">
-      <any-rating
-        [disabled]="false"
-        formControlName="rating"
-      ></any-rating>
-    </div>
 
-    <small>Hotel Name</small>
-    <!-- static value -->
-    <any-rating [initialValue]="3" [disabled]="true"></any-rating>
-    <!-- <div class="card mb-3 mt-3" *ngFor="let Location of fromLocation" (click)="handleOrigin(Location)">
-                    <div class="card-header"><b>Name:</b> {{ Location.name }}</div>
-                    <div class="card-body">City Name: {{ Location.address.cityName }}
-                        <br>
-                        Country Name: {{ Location.address.countryName }}
-                    </div>
-                    <div class="card-footer"><b>SubType:</b> {{ Location.subType }}</div>
-                  </div> -->
-
-    <div class="card mb-3 mt-3" *ngFor="let hotel of hotelsList">
-      <div class="card-header"><b>Name:</b> {{ hotel.name }}</div>
-      <div class="card-body">
-        Brief Description: {{ hotel.description }}
-        <br />
-        Location: {{ hotel.location }}
+      <label for=""><h3>Search:</h3></label>
+    
+      <div fxLayout="row">
+        <input fxLayoutAlign="start center" fxFlex="50" fxLayoutGap="5px"
+          type="text"
+          class="form-control"
+          name="from"
+          [(ngModel)]="hotelSearchField"
+          (ngModelChange)="handleByHotelName($event)"
+        />
+        <!-- input test -->
+        <div fxLayout="row"  fxFlex fxLayoutAlign="start center" fxFlex="50" fxLayoutGap="5px">
+          <any-rating
+            [disabled]="false"
+            formControlName="rating"
+          ></any-rating>
+        </div>
       </div>
-      <!-- <ratings [value]="hotel.rating"></ratings> -->
-      <div class="card-footer"><b>Rating:</b> {{ hotel.rating }}</div>
+
+      <div class="card mb-3 mt-3" *ngFor="let hotel of hotelsList">
+        <div class="card-header"><b>Name:</b> {{ hotel.name }} </div>
+        <div class="card-body">
+          Brief Description: {{ hotel.description }}
+          <br />
+          Location: {{ hotel.location }}
+        </div>
+        <!-- <ratings [value]="hotel.rating"></ratings> -->
+        <div class="card-footer"><any-rating [initialValue]="hotel.rating" [disabled]="true"></any-rating> </div>
+      </div>
     </div>
-  </div>
 </form>

@@ -10,7 +10,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./hotel-search.component.scss'],
 })
 export class HotelSearchComponent implements OnInit, AfterViewInit, OnDestroy {
-  hotelSearchField: any = '';
+  //hotelSearchField: any = '';
   hotelsList: any = [];
   form!: FormGroup;
   search$: Subject<string> = new Subject<string>();
@@ -19,6 +19,7 @@ export class HotelSearchComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private hotelService: HotelService, private fb: FormBuilder) {
     this.form = this.fb.group({
+      hotelSearchField: new FormControl(''),
       rating: new FormControl(0)
     })
   }
@@ -29,19 +30,26 @@ export class HotelSearchComponent implements OnInit, AfterViewInit, OnDestroy {
     this.search$
       .asObservable()
       .pipe(debounce(() => interval(3000)))
-      .subscribe((value: string) => {
+      .subscribe((value?: string, rating?: number) => {
+
+        var hotelSearchText = this.form.get("hotelSearchField")?.value;
+        var ratingValue = this.form.get("rating")?.value;
+
         this.hotelService
-          .getHotelFilterDataObservable(this.hotelSearchField)
-          .subscribe((a) => {
-            this.hotelsList = a.HotelListModel;
+          .getHotelFilterDataObservable(hotelSearchText, ratingValue)
+          .pipe(take(1))
+          .subscribe((a: any) => {
+            this.hotelsList = [...a.hotelSearchListDto];
           });
       });
   }
 
   ngAfterViewInit(): void {
+
     this.form.valueChanges.subscribe((res) => {
-      const { rating } = res;
-      console.log(rating);
+      
+       const { rating } = res;
+       this.search$.next(rating);
     });
   }
 

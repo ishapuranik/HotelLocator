@@ -32,28 +32,17 @@ export class HotelService {
          
     }
 
-    public getHotelFilterDataObservable(hotelName: string, rating?: number) {
-        var hotelList: any[] = [];
-
-        return this.hotelEndpoint.getHotelSearchByNameOrRatingDataEndpoint(hotelName, rating)
-            .pipe(map((hotelData: any[]) => {
-            this.processHotelDataResponse(hotelData);
-            }),
-            catchError((error: Error) => {
-                this.handleHotelDataError(error);
-                return hotelList;
-            }));
-        }
+    public getHotelFilterDataObservable(hotelName?: string, rating?: number) {
+        return this.hotelEndpoint.getHotelSearchByNameOrRatingDataEndpoint(hotelName, rating);
+    }
 
     private processHotelDataResponse(hotelData: IHotelData[]) {
     this.currentHotelData.hotelData = hotelData;
     this.currentHotelData.error = null;
-    //this.currentTradingDataSource.next(this.currentTradingData); //Todo: check what it does
     }
 
     private handleHotelDataError(error: Error) {
     this.currentHotelData.hotelData = null;
     this.currentHotelData.error = error;
-    //this.currentTradingDataSource.next(this.currentTradingData); //Todo: check what it does
     }
 }

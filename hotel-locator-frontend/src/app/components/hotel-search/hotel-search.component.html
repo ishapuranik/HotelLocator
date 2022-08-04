@@ -10,18 +10,18 @@
           type="text"
           class="form-control"
           name="from"
-          [(ngModel)]="hotelSearchField"
+          formControlName="hotelSearchField"
           (ngModelChange)="handleByHotelName($event)"
         />
         <!-- input test -->
-        <div fxLayout="row"  fxFlex fxLayoutAlign="start center" fxFlex="50" fxLayoutGap="5px">
+        <div [formGroup]="form" fxLayout="row"  fxFlex fxLayoutAlign="start center" fxFlex="50" fxLayoutGap="5px">
           <any-rating
             [disabled]="false"
             formControlName="rating"
           ></any-rating>
         </div>
       </div>
-
+    </div>
       <div class="card mb-3 mt-3" *ngFor="let hotel of hotelsList">
         <div class="card-header"><b>Name:</b> {{ hotel.name }} </div>
         <div class="card-body">
@@ -32,5 +32,5 @@
         <!-- <ratings [value]="hotel.rating"></ratings> -->
         <div class="card-footer"><any-rating [initialValue]="hotel.rating" [disabled]="true"></any-rating> </div>
       </div>
-    </div>
+    
 </form>

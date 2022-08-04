@@ -42,7 +42,7 @@ export class HotelApiEndpoint {
     }
 
     public getHotelSearchByNameOrRatingDataEndpoint(
-        hotelName : string,
+        hotelName? : string,
         rating? : number,
      ): Observable<any> {
         const params = {
@@ -50,6 +50,9 @@ export class HotelApiEndpoint {
         } as any;
         if (rating != undefined && rating != null) {
             params['rating'] = rating;
+        }
+        if (hotelName != undefined && hotelName != null) {
+            params['hotelName'] = hotelName;
         }
         return this.http
             .get(
